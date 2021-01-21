@@ -26,11 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-if not DEBUG:
-    SECRET_KEY = os.environ['SECRET_KEY']
-    django_heroku.settings(locals()) #追加
-
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com',]
+ALLOWED_HOSTS = ['127.0.0.1', 'hoshikuzu-blog.herokuapp.com',]
 
 
 # Application definition
@@ -132,11 +128,15 @@ STATIC_URL = '/static/'
 STATIC_DIRS = BASE_DIR/'static'
 STATIC_ROOT = BASE_DIR/'staticfiles'
 
+db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
+DATABASES['default'].update(db_from_env)
+
 #追加
 try:
     from .local_settings import *
 except ImportError:
     pass
 
-db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
-DATABASES['default'].update(db_from_env)
+if not DEBUG:
+    SECRET_KEY = os.environ['SECRET_KEY']
+    django_heroku.settings(locals()) #追加
