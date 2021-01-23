@@ -104,3 +104,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR/'static'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Login redirect to top index
+
+LOGIN_REDIRECT_URL = '/'
